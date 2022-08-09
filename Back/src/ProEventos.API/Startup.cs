@@ -34,6 +34,7 @@ namespace ProEventos.API
                         .UseSqlite(Configuration
                             .GetConnectionString("Default")));
             services.AddControllers();
+            services.AddCors();
             services
                 .AddSwaggerGen(c =>
                 {
@@ -66,8 +67,10 @@ namespace ProEventos.API
 
             app.UseAuthorization();
 
-            app
-                .UseEndpoints(endpoints =>
+            app.UseCors(acesso => acesso.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
+            );
+            
+            app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
                 });
